@@ -1,0 +1,59 @@
+package GFG.String;
+
+class DeleteAdjacentDuplicates
+{
+    // Efficient function to in-place remove all adjacent duplicates
+    // from the given String
+    public static String removeAdjDup(String str)
+    {
+        // As String is Immutable in Java, convert it to character array
+        char[] chars = str.toCharArray();
+
+        // stores previous valid character
+        char prev = chars[0];
+
+        // k maintains the index of last filled location in the result
+        int k = 0;
+
+        // start from second character
+        int i = 1;
+
+        // do till end of the String is reached
+        while (i < chars.length)
+        {
+            // if the current character is not same as the previous character
+            if (prev != chars[i])
+            {
+                k++;
+                chars[k] = chars[i];	// update result
+                i++;
+                prev = chars[k];			// update prev
+            }
+            else
+            {
+                // remove adjacent duplicates
+                while (i < chars.length && prev == chars[i]) {
+                    i++;
+                }
+
+                k--;
+                prev = chars[k];		// update prev
+            }
+        }
+
+        // delete str[k+1, n) as result lies in str[0..k]
+        return new String(chars).substring(0, k + 1);
+    }
+
+    public static void main(String[] args)
+    {
+//        String str = "ABDAADBBDAABB";
+//        String str = "AAAAAA";
+        String str = "DBAABDAB";
+            str = " "+str;
+
+        str = removeAdjDup(str).trim();
+        System.out.println("The String left after removal of all adjacent duplicates is ---> "
+                + str);
+    }
+}
